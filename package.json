@@ -4,7 +4,11 @@
   "description": "spotify api reqest",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "node index.js",
+    "client" : "cd client && npm start",
+    "postinstall": "cd client && npm install"
   },
   "keywords": [
     "spotify",
