@@ -1,41 +1,48 @@
-import {useEffect} from "react";
-import logo from './logo.svg';
+import {useEffect, useState} from "react";
+import { accessToken, logout, getCurrentUserProfile } from "./spotify";
+import { catchErrors } from "./utils";
 import './App.css';
 
-function App() {
+export default function App() {
+  const [token, setToken] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const queryParams = window.location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    const access_token = urlParams.get('access_token');
-    const refresh_token = urlParams.get('refresh_token');
-
-    console.log(access_token, refresh_token);
-
-    if(refresh_token) {
-      fetch(`/refresh_token?refresh_token=${refresh_token}`)
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-    }
-  });
+    setToken(accessToken);
+    const fetchData = async () => {
+        const {data} = await getCurrentUserProfile();
+        setProfile(data);
+    };
+    
+    catchErrors(fetchData());
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
+        {!token ? (
+          <a
           className="App-link"
           href="http://localhost:8888/login"
         >
           Login to Spotify
         </a>
+        ) : (
+          <>
+          <h1>Logged In</h1>
+          <button onClick={logout}>Logout</button>
+          {profile && (
+            <>
+              <h1>{profile.display_name}</h1>
+              <p>{profile.followers.total}</p>
+              {profile.images.length && profile.images[0].url && (
+                <img src={profile.images[0].url} alt="avatar" />
+              )}
+            </>
+          )}
+          </>
+        )}        
       </header>
     </div>
   );
 }
-
-export default App;
