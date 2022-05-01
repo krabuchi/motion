@@ -7,16 +7,26 @@ import {
 } from "react-router-dom";
 import { accessToken, logout, getCurrentUserProfile } from "./spotify";
 import { catchErrors } from "./utils";
-import styled from "styled-components/macro";
 import { GlobalStyle } from "./styles";
 
-const StyledLoginButton = styled.a`
-  background-color: var(--green);
+import { Login, Profile } from "./pages";
+
+import styled from 'styled-components/macro';
+
+const StyledLogoutButton = styled.button`
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(0,0,0,.7);
   color: var(--white);
-  padding: 10px 20px;
-  margin: 20px auto;
-  border-radius: 30px;
-  display: inline-block;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  border-radius: var(--border-radius-pill);
+  z-index: 10;
+  @media (min-width: 768px) {
+    right: var(--spacing-lg);
+  }
 `;
 
 function ScrollToTop() {
@@ -48,14 +58,9 @@ export default function App() {
     <div className="App">
       <GlobalStyle />
       <header className="App-header">
-        {!token ? (
-          <StyledLoginButton
-          className="App-link"
-          href="http://localhost:8888/login"
-        >
-          Login to Spotify
-        </StyledLoginButton>
-        ) : (
+        {!token ? (<Login />) : (
+          <>
+          <StyledLogoutButton onClick={logout}>Log Out</StyledLogoutButton>
           <Router>
             <ScrollToTop />
             <Routes>
@@ -63,22 +68,10 @@ export default function App() {
               <Route path="/top-tracks" element={<h1>Top Tracks</h1>} />
               <Route path="/playlists/:id" element={ <h1>Playlist</h1>} />
               <Route path="/playlists" element={<h1>Playlists</h1>} />
-              <Route path="/" element={
-                <>
-                  <button onClick={logout}>Logout</button>
-                  {profile && (
-                    <>
-                      <h1>{profile.display_name}</h1>
-                      <p>{profile.followers.total}</p>
-                      {profile.images.length && profile.images[0].url && (
-                        <img src={profile.images[0].url} alt="avatar" />
-                      )}
-                    </>
-                  )}
-                </>}
-              />
+              <Route path="/" element={<Profile />} />
             </Routes>
           </Router>
+          </>
         )}        
       </header>
     </div>
