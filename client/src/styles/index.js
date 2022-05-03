@@ -27,3 +27,7 @@ export {
     default as StyledTrackList
 }
 from './StyledTrackList';
+
+export {
+    default as StyledDropdown
+} from './StyledDropdown';

@@ -9,7 +9,7 @@ import { accessToken, logout, getCurrentUserProfile } from "./spotify";
 import { catchErrors } from "./utils";
 import { GlobalStyle } from "./styles";
 
-import { Login, Profile, TopArtists, TopTracks } from "./pages";
+import { Login, Profile, TopArtists, TopTracks, Playlists, Playlist } from "./pages";
 
 import styled from 'styled-components/macro';
 
@@ -66,8 +66,8 @@ export default function App() {
             <Routes>
               <Route path="/top-artists" element={<TopArtists />} />
               <Route path="/top-tracks" element={<TopTracks />} />
-              <Route path="/playlists/:id" element={ <h1>Playlist</h1>} />
-              <Route path="/playlists" element={<h1>Playlists</h1>} />
+              <Route path="/playlists/:id" element={<Playlist />} />
+              <Route path="/playlists" element={ <Playlists />} />
               <Route path="/" element={<Profile />} />
             </Routes>
           </Router>

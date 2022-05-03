@@ -156,4 +156,25 @@ time_range - 'short_term' (last 4 weeks)
  */
  export const getTopTracks = (time_range = 'medium_term') => {
     return axios.get(`/me/top/tracks?time_range=${time_range}`);
-  };
+};
+
+/**
+ * Get a Playlist
+ * 
+ * @param {string} playlist_id - Spotify ID for playlist
+ * @returns {Promise}
+ */
+
+export const getPlaylistById = playlist_id => {
+    return axios.get(`/playlists/${playlist_id}`);
+};
+
+/**
+ *  Get Audio Features for Tracks
+ * @param {string} ids
+ * @returns {Promise}
+ */
+
+export const getAudioFeaturesForTracks = ids => {
+    return axios.get(`/audio-features?ids=${ids}`);
+}

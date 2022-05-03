@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { catchErrors } from "../utils";
-import { SectionWrapper, TimeRangeButtons, TrackList } from "../components";
+import { Loader, SectionWrapper, TimeRangeButtons, TrackList } from "../components";
 import { getTopTracks } from "../spotify";
 
 const TopTracks = () => {    
@@ -15,13 +15,16 @@ const TopTracks = () => {
         
         catchErrors(fetchData());
     }, [activeRange]);
+    
     return (
         <main>
-        {topTracks && (
+        {topTracks ? (
             <SectionWrapper title="Top tracks" breadcrumb={true}>
                 <TimeRangeButtons activeRange={activeRange} setActiveRange={setActiveRange}  />
                 <TrackList tracks={topTracks.items.slice(0, 10)} />
             </SectionWrapper>
+        ) : (
+            <Loader />
         )}
         </main>
     )
