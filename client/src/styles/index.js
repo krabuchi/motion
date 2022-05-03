@@ -8,13 +8,22 @@ export {
 }
 from './StyledHeader';
 
-export { 
+export {
     default as StyledSection
-} from './StyledSection';
+}
+from './StyledSection';
 
-export { 
+export {
     default as StyledGrid
-} from './StyledGrid';
+}
+from './StyledGrid';
 
+export {
+    default as StyledRangeButtons
+}
+from './StyledRangeButtons';
 
-export { default as StyledTrackList } from './StyledTrackList';
+export {
+    default as StyledTrackList
+}
+from './StyledTrackList';
